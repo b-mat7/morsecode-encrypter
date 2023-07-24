@@ -1,6 +1,9 @@
 "use strict"
 
-const inputBtn = document.body.querySelector("button");
+const encryptBtn = document.body.querySelector(".encryptBtn");
+const soundBtn = document.body.querySelector(".soundBtn");
+const inputField = document.body.querySelector("textarea");
+const outputContainer = document.body.querySelector("p");
 
 const morseAlphabet = [
   { letter: "1", morseCode: ".----" },
@@ -42,15 +45,93 @@ const morseAlphabet = [
   { letter: "Z", morseCode: "--.." }
 ];
 
+const morseSound = [
+  { letter: "1", morseCode: "./assets/sounds/1.wav" },
+  { letter: "2", morseCode: "./assets/sounds/2.wav" },
+  { letter: "3", morseCode: "./assets/sounds/3.wav" },
+  { letter: "4", morseCode: "./assets/sounds/4.wav" },
+  { letter: "5", morseCode: "./assets/sounds/5.wav" },
+  { letter: "6", morseCode: "./assets/sounds/6.wav" },
+  { letter: "7", morseCode: "./assets/sounds/7.wav" },
+  { letter: "8", morseCode: "./assets/sounds/8.wav" },
+  { letter: "9", morseCode: "./assets/sounds/9.wav" },
+  { letter: "0", morseCode: "./assets/sounds/0.wav" },
+  { letter: " ", morseCode: "    " },
+  { letter: "A", morseCode: "./assets/sounds/A.wav" },
+  { letter: "B", morseCode: "./assets/sounds/B.wav" },
+  { letter: "C", morseCode: "./assets/sounds/C.wav" },
+  { letter: "D", morseCode: "./assets/sounds/D.wav" },
+  { letter: "E", morseCode: "./assets/sounds/E.wav" },
+  { letter: "F", morseCode: "./assets/sounds/F.wav" },
+  { letter: "G", morseCode: "./assets/sounds/G.wav" },
+  { letter: "H", morseCode: "./assets/sounds/H.wav" },
+  { letter: "I", morseCode: "./assets/sounds/I.wav" },
+  { letter: "J", morseCode: "./assets/sounds/J.wav" },
+  { letter: "K", morseCode: "./assets/sounds/K.wav" },
+  { letter: "L", morseCode: "./assets/sounds/L.wav" },
+  { letter: "M", morseCode: "./assets/sounds/M.wav" },
+  { letter: "N", morseCode: "./assets/sounds/N.wav" },
+  { letter: "O", morseCode: "./assets/sounds/O.wav" },
+  { letter: "P", morseCode: "./assets/sounds/P.wav" },
+  { letter: "Q", morseCode: "./assets/sounds/Q.wav" },
+  { letter: "R", morseCode: "./assets/sounds/R.wav" },
+  { letter: "S", morseCode: "./assets/sounds/S.wav" },
+  { letter: "T", morseCode: "./assets/sounds/T.wav" },
+  { letter: "U", morseCode: "./assets/sounds/U.wav" },
+  { letter: "V", morseCode: "./assets/sounds/V.wav" },
+  { letter: "W", morseCode: "./assets/sounds/W.wav" },
+  { letter: "X", morseCode: "./assets/sounds/X.wav" },
+  { letter: "Y", morseCode: "./assets/sounds/Y.wav" },
+  { letter: "Z", morseCode: "./assets/sounds/Z.wav" }
+]
+let outputSound = [];
+let i = 0;
+
+
+const blendInBtn = () => {
+  setTimeout(() => {
+    soundBtn.style.opacity = 1;
+  }, 3000)
+}
+
+
+const printCode = (container, arr) => {
+  for(let i = 0; i < arr.length ; i++){
+    setTimeout(() => {
+      container.textContent += arr[i];
+    }, 200 * i)
+  }
+  blendInBtn();
+}
+
+
+const playSound = () => {
+  if (i < outputSound.length) {
+    const audio = new Audio(outputSound[i]);
+    audio.addEventListener('ended', () => {
+      i++;
+      audio.playbackRate = 0.1;
+      playSound();
+    });
+    audio.play();
+  } else {
+    i = 0;
+  }
+}
+
+
 const encrypt = () => {
-  const inputField = document.body.querySelector("textarea");
-  const outputContainer = document.body.querySelector("p");
-
-  outputContainer.textContent = "";
-
   const inputMsg = inputField.value.toLocaleUpperCase().split("");
-  let outputCode = [];
 
+  // Create the vars (+ Reset/recreate at n+1 execution)
+  let outputMsg = [];
+  let outputCode = [];
+  outputSound = [];
+  outputContainer.textContent = "";
+  soundBtn.style.opacity = 0;
+
+
+  // Create Morse code string
   inputMsg.forEach((char) => {
     morseAlphabet.forEach((code) => {
       if(char === code["letter"]) {
@@ -58,15 +139,23 @@ const encrypt = () => {
       }
     })
   })
+  outputMsg = outputCode.join(" ");
+  console.log(outputMsg);
 
-  let outputMsg = outputCode.join(" ");
+  // Create Morse code sound
+  // Easiest way to filter out emptys which stops the playSound()
+  inputMsg.forEach((char) => {
+    morseSound.forEach((sound) => {
+      if(char === sound["letter"] && char !== " ") {
+        outputSound.push(sound["morseCode"]);
+      }
+    })
+  })
 
-  for(let i = 0; i < outputMsg.length ; i++){
-    setTimeout(() => {
-      outputContainer.textContent += outputMsg[i];
-    }, 200 * i)
-  }
+  printCode(outputContainer, outputMsg);
 }
 
-inputBtn.addEventListener("click", encrypt);
+encryptBtn.addEventListener("click", encrypt);
+// window.addEventListener("keypress", encrypt(event));
 
+soundBtn.addEventListener("click", playSound);

@@ -104,8 +104,8 @@ svg {
 /* ================================== */
 
 main {
-  font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 1.2rem;
+  font-family: monospace;
+  font-size: 1.3rem;
   font-weight: 500;
 
   width: 100%;
@@ -114,9 +114,15 @@ main {
   position: relative;
 
   background-image: url("../img/chris-curry-j5s_uLajP2o-unsplash.jpg");
+  /* background-image: url("../img/alvaro-reyes-MEldcHumbu8-unsplash.jpg"); */
   background-position: center;
   background-size: cover;
-  backdrop-filter: blur(5px);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  backdrop-filter: blur(4px) grayscale(80%);
 }
 
 .modal {
@@ -129,18 +135,29 @@ main {
 .modal__wrapper {
   display: flex;
   align-items: baseline;
-  column-gap: 30px;
+  column-gap: 50px;
 }
 
-button {
+.encryptBtn,
+.soundBtn {
   color: azure;
-  border: 3px solid azure;
+  font-weight: 700;
+  /* border: 3px solid azure; */
+  border-style: none;
   border-radius: 20px;
   padding: 0.25rem 1rem;
   background: transparent;
 }
 
-button:hover {
+.soundBtn {
+  margin-top: 2rem;
+  opacity: 0;
+
+  transition: opacity 1000ms ease;
+}
+
+.encryptBtn:hover,
+.soundBtn:hover {
   background-color: azure;
   color: #272424
 }
@@ -148,22 +165,24 @@ button:hover {
 textarea {
   border: 3px solid azure;
   color: azure;
+  font-weight: 700;
   border-radius: 10px;
   padding: 0.25rem 1rem;
   background: transparent;
 }
 
 textarea:focus {
-  /* background: azure */
+  background-color: azure;
+  color: #272424
 }
 
 .output-container {
-  padding-top: 100px;
+  margin-top: 60px;
   text-align: center;
   white-space: normal;
   color: azure;
   font-size: 2rem;
-  font-weight: 500;
+  font-weight: 700;
 
   position: absolute;
   top: 70%;
@@ -171,5 +190,6 @@ textarea:focus {
   transform: translate(-50%, -50%);
 
   overflow: hidden; /* Ensures the text is not visible initially */
-  white-space: nowrap; /* Prevents text from wrapping */
+  /* white-space: nowrap;  */
+  min-width: 90%
 }
