@@ -130,6 +130,7 @@ main {
   top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
+  min-width: 70%;
 }
 
 .modal__wrapper {
@@ -152,7 +153,6 @@ main {
 .soundBtn {
   margin-top: 2rem;
   opacity: 0;
-
   transition: opacity 1000ms ease;
 }
 
@@ -162,7 +162,8 @@ main {
   color: #272424
 }
 
-textarea {
+.message {
+  width: 100%;
   border: 3px solid azure;
   color: azure;
   font-weight: 700;
@@ -171,23 +172,23 @@ textarea {
   background: transparent;
 }
 
-textarea:focus {
+.message:focus {
   background-color: azure;
   color: #272424
 }
 
-.output-container {
+.output {
+  position: absolute;
+  top: 70%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  
   margin-top: 60px;
   text-align: center;
   white-space: normal;
   color: azure;
   font-size: 2rem;
   font-weight: 700;
-
-  position: absolute;
-  top: 70%;
-  left: 50%;
-  transform: translate(-50%, -50%);
 
   overflow: hidden; /* Ensures the text is not visible initially */
   /* white-space: nowrap;  */

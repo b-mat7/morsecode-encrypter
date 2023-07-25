@@ -2,8 +2,8 @@
 
 const encryptBtn = document.body.querySelector(".encryptBtn");
 const soundBtn = document.body.querySelector(".soundBtn");
-const inputField = document.body.querySelector("textarea");
-const outputContainer = document.body.querySelector("p");
+const inputField = document.body.querySelector(".message");
+const outputContainer = document.body.querySelector(".output");
 
 const morseAlphabet = [
   { letter: "1", morseCode: ".----" },
@@ -45,7 +45,7 @@ const morseAlphabet = [
   { letter: "Z", morseCode: "--.." }
 ];
 
-const morseSound = [
+const morseSounds = [
   { letter: "1", morseCode: "./assets/sounds/1.wav" },
   { letter: "2", morseCode: "./assets/sounds/2.wav" },
   { letter: "3", morseCode: "./assets/sounds/3.wav" },
@@ -88,10 +88,30 @@ let outputSound = [];
 let i = 0;
 
 
-const blendInBtn = () => {
-  setTimeout(() => {
-    soundBtn.style.opacity = 1;
-  }, 3000)
+const handleKey = (event) => {
+  event.keyCode === 13
+  ? (()=> inputCheck())()
+  : null; 
+}
+
+
+const inputCheck = () => {
+  const regexStr = /^[a-zA-Z0-9 ]+$/;
+  const inputStr = inputField.value;
+ 
+  if(regexStr.test(inputStr)) {
+    const inputMsg = inputField.value.toLocaleUpperCase().split("");
+
+    if(inputMsg.length === 0){
+      outputContainer.innerHTML = `<p style="color:red">You need to enter at least one char or number...</p>`;
+    } else if (inputMsg.length > 75) {
+      outputContainer.innerHTML = `<p style="color:red">You shouldn't enter more than 75 chars per message...</p>`;
+    } else {
+      encrypt(inputMsg);
+    }
+  } else {
+    outputContainer.innerHTML = `<p style="color:red">Only letter lower- and uppercase letters A-Z and numbers 0-9 allowed</p>`;
+  }
 }
 
 
@@ -101,7 +121,13 @@ const printCode = (container, arr) => {
       container.textContent += arr[i];
     }, 200 * i)
   }
-  blendInBtn();
+}
+
+
+const blendInSoundBtn = () => {
+  setTimeout(() => {
+    soundBtn.style.opacity = 1;
+  }, 3000)
 }
 
 
@@ -120,10 +146,8 @@ const playSound = () => {
 }
 
 
-const encrypt = () => {
-  const inputMsg = inputField.value.toLocaleUpperCase().split("");
-
-  // Create the vars (+ Reset/recreate at n+1 execution)
+const encrypt = (inputMsg) => {
+  // Create the vars (+ Reset / re-create at n+1 execution)
   let outputMsg = [];
   let outputCode = [];
   outputSound = [];
@@ -140,12 +164,11 @@ const encrypt = () => {
     })
   })
   outputMsg = outputCode.join(" ");
-  console.log(outputMsg);
 
   // Create Morse code sound
   // Easiest way to filter out emptys which stops the playSound()
   inputMsg.forEach((char) => {
-    morseSound.forEach((sound) => {
+    morseSounds.forEach((sound) => {
       if(char === sound["letter"] && char !== " ") {
         outputSound.push(sound["morseCode"]);
       }
@@ -153,9 +176,9 @@ const encrypt = () => {
   })
 
   printCode(outputContainer, outputMsg);
+  blendInSoundBtn();
 }
 
-encryptBtn.addEventListener("click", encrypt);
-// window.addEventListener("keypress", encrypt(event));
-
+window.addEventListener("keypress", handleKey);
+encryptBtn.addEventListener("click", inputCheck);
 soundBtn.addEventListener("click", playSound);
