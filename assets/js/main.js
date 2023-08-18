@@ -84,9 +84,9 @@ const morseSounds = [
   { letter: "Y", morseCode: "./assets/sounds/Y.wav" },
   { letter: "Z", morseCode: "./assets/sounds/Z.wav" }
 ]
+
 let outputSound = [];
 let i = 0;
-
 
 const handleKey = (event) => {
   event.keyCode === 13
@@ -97,20 +97,17 @@ const handleKey = (event) => {
 
 const inputCheck = () => {
   const regexStr = /^[a-zA-Z0-9 ]+$/;
-  const inputStr = inputField.value;
- 
-  if(regexStr.test(inputStr)) {
-    const inputMsg = inputField.value.toLocaleUpperCase().split("");
+  const inputStr = inputField.value.trim();
 
-    if(inputMsg.length === 0){
-      outputContainer.innerHTML = `<p style="color:red">You need to enter at least one char or number...</p>`;
-    } else if (inputMsg.length > 75) {
-      outputContainer.innerHTML = `<p style="color:red">You shouldn't enter more than 75 chars per message...</p>`;
-    } else {
-      encrypt(inputMsg);
-    }
+  console.log(inputStr.length);
+  console.log(regexStr.test(inputStr));
+
+  if(inputStr.length === 0 || inputStr.length > 100) {
+    outputContainer.innerHTML = `<p style="color:red">Please enter at least one up to 100 letters or numbers at a time...</p>`;
+  } else if (!regexStr.test(inputStr)) {   
+    outputContainer.innerHTML = `<p style="color:red">Only lower- and uppercase letters A-Z and numbers 0-9 allowed</p>`;
   } else {
-    outputContainer.innerHTML = `<p style="color:red">Only letter lower- and uppercase letters A-Z and numbers 0-9 allowed</p>`;
+    encrypt(inputStr.toLocaleUpperCase().split(""));
   }
 }
 
