@@ -163,7 +163,7 @@ main {
 }
 
 .message {
-  width: 100%;
+  width: 80%;
   border: 3px solid azure;
   color: azure;
   font-weight: 700;
@@ -193,4 +193,30 @@ main {
   overflow: hidden; /* Ensures the text is not visible initially */
   /* white-space: nowrap;  */
   min-width: 90%
+}
+
+
+/* ========= Mobile ================== */
+@media screen and (max-width: 425px) {
+  main {
+    font-size: 1rem;
+  }
+
+  .modal {
+    position: absolute;
+    top: 10%;
+    left: 0%;
+    transform: translate(0%, 0%);
+    min-width: 100%;
+  }
+
+  .modal__wrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .soundBtn {
+    display: none;
+  }
 }
