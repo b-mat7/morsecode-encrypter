@@ -88,12 +88,13 @@ const morseSounds = [
 let outputSound = [];
 let i = 0;
 
+/* ===== UTILITY FUNCTIONS ===== */
+// Start Encryption also on Enter key
 const handleKey = (event) => {
   event.keyCode === 13
   ? (()=> inputCheck())()
   : null; 
 }
-
 
 const inputCheck = () => {
   const regexStr = /^[a-zA-Z0-9 ]+$/;
@@ -142,9 +143,9 @@ const playSound = () => {
   }
 }
 
-
+/* ===== MAIN ENCRYPTION FUNCTION ===== */
 const encrypt = (inputMsg) => {
-  // Create the vars (+ Reset / re-create at n+1 execution)
+  // Create vars (+ Reset / re-create at n+1 execution)
   let outputMsg = [];
   let outputCode = [];
   outputSound = [];
@@ -163,7 +164,7 @@ const encrypt = (inputMsg) => {
   outputMsg = outputCode.join(" ");
 
   // Create Morse code sound
-  // Easiest way to filter out emptys which stops the playSound()
+  // Filter out empty values which stops the playSound()
   inputMsg.forEach((char) => {
     morseSounds.forEach((sound) => {
       if(char === sound["letter"] && char !== " ") {
@@ -176,6 +177,7 @@ const encrypt = (inputMsg) => {
   blendInSoundBtn();
 }
 
+/* ===== STARTUP - ASSIGN EVENT LISTENERS ===== */
 window.addEventListener("keypress", handleKey);
 encryptBtn.addEventListener("click", inputCheck);
 soundBtn.addEventListener("click", playSound);

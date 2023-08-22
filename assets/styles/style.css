@@ -114,7 +114,6 @@ main {
   position: relative;
 
   background-image: url("../img/chris-curry-j5s_uLajP2o-unsplash.jpg");
-  /* background-image: url("../img/alvaro-reyes-MEldcHumbu8-unsplash.jpg"); */
   background-position: center;
   background-size: cover;
 }
@@ -127,7 +126,7 @@ main {
 
 .modal {
   position: absolute;
-  top: 60%;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   min-width: 70%;
@@ -143,7 +142,6 @@ main {
 .soundBtn {
   color: azure;
   font-weight: 700;
-  /* border: 3px solid azure; */
   border-style: none;
   border-radius: 20px;
   padding: 0.25rem 1rem;
@@ -179,7 +177,7 @@ main {
 
 .output {
   position: absolute;
-  top: 70%;
+  top: 60%;
   left: 50%;
   transform: translate(-50%, -50%);
   
@@ -190,8 +188,7 @@ main {
   font-size: 2rem;
   font-weight: 700;
 
-  overflow: hidden; /* Ensures the text is not visible initially */
-  /* white-space: nowrap;  */
+  overflow: hidden; /* Ensures text not visible initially */
   min-width: 90%
 }
 
