@@ -188,7 +188,7 @@ main {
   font-size: 2rem;
   font-weight: 700;
 
-  overflow: hidden; /* Ensures text not visible initially */
+  overflow: hidden;
   min-width: 90%
 }
 

@@ -89,7 +89,6 @@ let outputSound = [];
 let i = 0;
 
 /* ===== UTILITY FUNCTIONS ===== */
-// Start Encryption also on Enter key
 const handleKey = (event) => {
   event.keyCode === 13
   ? (()=> inputCheck())()
@@ -145,7 +144,6 @@ const playSound = () => {
 
 /* ===== MAIN ENCRYPTION FUNCTION ===== */
 const encrypt = (inputMsg) => {
-  // Create vars (+ Reset / re-create at n+1 execution)
   let outputMsg = [];
   let outputCode = [];
   outputSound = [];
@@ -164,7 +162,6 @@ const encrypt = (inputMsg) => {
   outputMsg = outputCode.join(" ");
 
   // Create Morse code sound
-  // Filter out empty values which stops the playSound()
   inputMsg.forEach((char) => {
     morseSounds.forEach((sound) => {
       if(char === sound["letter"] && char !== " ") {
